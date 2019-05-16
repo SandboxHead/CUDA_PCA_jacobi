@@ -1,8 +1,8 @@
 #ifndef LAB3_IO_H
 #define LAB3_IO_H
 
-#include <stdio.h>
-#include <malloc.h>
+#include <bits/stdc++.h>
+// #include <malloc.h>
 
 /*
 	M : number of rows (samples) in input matrix D
@@ -59,7 +59,8 @@ void write_result (int M,
         int SIGMAn, 
 		int K, 
 		double* D_HAT,
-		double computation_time);
+		double computation_time,
+        const char* outfile);
 
 /* 
 Function to check the format of output code.

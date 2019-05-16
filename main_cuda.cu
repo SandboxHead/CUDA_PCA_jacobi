@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <omp.h>
 
+
 /*
 	Arguments:
 		arg1: input filename (consist M, N and D)
@@ -12,12 +13,12 @@
 
 int main(int argc, char const *argv[])
 {
-	if (argc < 3){
+	if (argc < 4){
 		printf("\nLess Arguments\n");
 		return 0;
 	}
 
-	if (argc > 3){
+	if (argc > 4){
 		printf("\nTOO many Arguments\n");
 		return 0;
 	}
@@ -70,12 +71,14 @@ int main(int argc, char const *argv[])
 	cudaEventSynchronize(stop);
 	cudaEventElapsedTime(&computation_time, start, stop);
 	
+	printf("Computation Time: %f s\n", computation_time/1000);
 	/*
 		--Pre-defined functions --
 		checks for correctness of results computed by SVD and PCA
 		and outputs the results
 	*/
-	write_result(M, N, D, U, SIGMA, V_T, SIGMAm, SIGMAn, K, D_HAT, computation_time);
+
+	write_result(M, N, D, U, SIGMA, V_T, SIGMAm, SIGMAn, K, D_HAT, computation_time, argv[3]);
 
 	return 0;
 }

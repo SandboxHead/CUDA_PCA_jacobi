@@ -15,6 +15,22 @@ void read_matrix (const char* input_filename, int* M, int* N, double** D){
 	fclose(fin);
 }
 
+
+void print_matrix1(const char* name, int M, int N, double* A){
+	printf("%s: \n", name);
+	// cout << name << ": \n";
+	for(int i=0; i<M; i++){
+		for(int j=0; j<N; j++){
+			printf("%lf ", A[i*N + j]);
+			// cout << A[i*N + j] << " " ;
+		}
+		// cout << endl;
+		printf("\n");
+	}
+	// cout << endl;
+	printf("\n");
+}
+
 void write_result (int M, 
 		int N, 
 		double* D, 
@@ -25,8 +41,18 @@ void write_result (int M,
 		int SIGMAn, 
 		int K, 
 		double* D_HAT,
-		double computation_time){
+		double computation_time,
+		const char* outfile){
 	// Will contain output code
+	freopen(outfile, "w", stdout);
+
+	// print_matrix("SIGMA", 1, N, SIGMA);
+	// print_matrix("U", N, N, U);
+	// print_matrix("V_T", M, M, V_T);
+	printf("K = %d\n", K);
+	// cout << "K = " << K << endl;
+	print_matrix1("D_HAT", M, K, D_HAT);
+	fclose(stdout);
 }
 
 void format_checker (int M, 
