@@ -30,7 +30,7 @@ The program takes two command line arguments:
 Note that the retention percentage is integer.  Please refer to `main_cuda.cu` for more details.  
 To run the program:
 ```
-./pca <input filename> <retention>
+./pca <input filename> <retention> <output filename>
 ```
 Example:
 ```
