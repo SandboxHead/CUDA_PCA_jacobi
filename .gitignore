@@ -1,3 +1,5 @@
 .vscode
 pca
+*.out
+testcase_*
 
