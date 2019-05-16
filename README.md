@@ -1,5 +1,14 @@
-# col380_lab3_suite
-Problem Statement: Implement Principal Component Analysis with Singular Vector Decomposition in CUDA
+# CUDA Jacobi Implementation
+
+## Overview
+This is my course assignment of COL380: Introduction to Parallel Programming and Distributed Computing (Sem-II, 2018-19) (Instructor: Prof. Subodh V. Sharma) at Indian Institute of Technology (IIT), Delhi. The assignment asked for an implementation of Principal Component Analysis (PCA) through Singular Value Decomposition (SVD) using a parallel Jacobi eigenvalue algorithm. The problem statement could be found in lab3.pdf.
+
+It contains a highly optimised parallel GPU implementation of Jacobi method to calculate eigenvalues and eigenvectors of a symmetric matrix. This Jacobi function could be found in lab3_cuda.cu and could be used anywhere else as well.
+
+**Primary Reference: Novel GPU Implementation of Jacobi Algorithm for Karhunen-Loeve Transform of Dense Matrices (Mustafa U. Tamn, Onur Yilmaz, and Ali N. Akansu) [IEEE 2012]**
+
+## Extent of parallelisation and Input limitation
+This code works on Input matrices of dimensions M (#samples) x N (#features) and uses N/2 blocks of GPU with N threads in each block. So, N could not exceed maximum number of threads in a block of GPU.
 
 ## Directories and files
 - `testcase/`: contains python script `gen_testcase.py` for sample testcase generation  
@@ -8,7 +17,6 @@ Problem Statement: Implement Principal Component Analysis with Singular Vector D
 - `lab3_cuda.h`: header file for the functions to be implemented  
 - `lab3_cuda.cu`: implement the function in this file  
 Refer to respective files for furthur details.  
-**Do not change the directory structure and prototype of functions.**
 
 ## Building and Executing
 ```
@@ -30,9 +38,9 @@ Example:
 ```
 
 ## Generating testcases
-Script `gen_testcase.py` generates testcases as per the parameters and output the generated testcase in file `testcase_<M>_<N>` in the desired format. You might need to change the values of variables `M` and `N` in the script. Read the comments in the script for more information.
+Script `gen_testcase.py` generates testcases as per the parameters and output the generated testcase in file `testcase_<M>_<N>` in the desired format.
 ```
-python3 gen_testcase.py
+python3 gen_testcase.py M N
 ```
 
 ## Input-Output Specifications
@@ -41,26 +49,15 @@ python3 gen_testcase.py
 - N : number of columns (features) in input matrix D
 - D : input matrix, #elements in D is (M * N)
 
-The first line of the input file contains `M` followed by `N`. The second line contains elements of matrix `D`. All the values in one line are space separated.  
+The first line of the input file contains `M` followed by `N`. The second line contains elements of matrix `D`. All the values in one line are space separated.
 
-#### Output Specification
-Your program should perform SVD and PCA on the given input and store the results in the variables given in the program. We will check the correctness by calling the functions from the program. You should compute following matrices and values:  
-- U : N x N (or M x M, read note in `lab3_cuda.h`) real matrix (to be computed by SVD)
-- SIGMA : N x M (or M x N, read note in `lab3_cuda.h`) diagonal matrix of positive real numbers ( to be computed by SVD). Consists only digonal elements, #elements = N. Hence, you should return a vector of N elements
-- V_T : M x M (or M x M, read note in `lab3_cuda.h`) real matrix (to be computed by SVD)
-- SIGMAm : #rows in SIGMA, same as rows in matrix used for SVD (to be computed)
-- SIGMAn : #columns in SIGMA, same as rows in matrix used for SVD (to be computed)
-- K : number of columns (features) in reduced matrix D_HAT
-- D_HAT : reduced matrix (to be computed by PCA)
+#### Input file specifications
+- First line contain two integer (`M` followed by `N`)
+- It then contains `M*N` doubles in matrix `D`.
 
-Refer to `lab3_cuda.h` for more details. **Your program should not output anything on `stdout`.**
+A sample input file could be found in testcases folder.
 
-**Important: read note in `lab3_cuda.h` for dimesions of U, SIGMA, V_T and clearifictaion of variables SIGMAm and SIGMAn**
+#### Output file specifications
+- First line contain value of `K`
+- Next M lines contains K doubles space seperated representing the modified D matrix. 
 
-## Submission Instructions
-- You are supposed to submit only one file named `lab3_cuda.cu`. Please make sure all the functions you have used are in this file.
-- Do not submit other files
-- Your code should build and execute as per the instructions given above. Please make sure that your code doesn't need any Makefile.
-- Your program should not output anything in `stdout`.
-
-We will not consider the submissions that don't comply with these guidelines.
